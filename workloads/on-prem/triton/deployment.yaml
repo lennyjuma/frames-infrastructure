@@ -17,6 +17,7 @@ spec:
       containers:
         - name: tritonserver
           image: triton-frames-triton:latest
+          imagePullPolicy: Never
           args:
             - tritonserver
             - --model-repository=/models
@@ -32,8 +33,12 @@ spec:
             - name: metrics
               containerPort: 8002
           resources:
+            requests:
+              cpu: "1"
+              memory: 2Gi
             limits:
-              nvidia.com/gpu: "1"
+              cpu: "4"
+              memory: 8Gi
           readinessProbe:
             httpGet:
               path: /v2/health/ready
