@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tritonserver
+  labels:
+    app: tritonserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tritonserver
+  template:
+    metadata:
+      labels:
+        app: tritonserver
+    spec:
+      containers:
+        - name: tritonserver
+          image: triton-frames-triton:latest
+          args:
+            - tritonserver
+            - --model-repository=/models
+            - --log-verbose=1
+            - --log-info=1
+            - --log-warning=1
+            - --log-error=1
+          ports:
+            - name: http
+              containerPort: 8000
+            - name: grpc
+              containerPort: 8001
+            - name: metrics
+              containerPort: 8002
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+          readinessProbe:
+            httpGet:
+              path: /v2/health/ready
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /v2/health/live
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 15
