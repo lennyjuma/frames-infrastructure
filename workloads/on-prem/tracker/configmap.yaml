@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: onprem-config
+  name: tracker-config
 data:
   TRITON_URL: "tritonserver:8001"
   QDRANT_URL: "http://qdrant:6333"

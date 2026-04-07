@@ -22,9 +22,9 @@ spec:
               containerPort: 8081
           envFrom:
             - configMapRef:
-                name: onprem-config
+                name: tracker-config
             - secretRef:
-                name: onprem-secrets
+                name: tracker-secrets
           resources:
             requests:
               cpu: 500m

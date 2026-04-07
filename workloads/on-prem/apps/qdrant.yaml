@@ -1,17 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: frames-onprem
+  name: onprem-qdrant
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://github.com/lennyjuma/frames-infrastructure.git
     targetRevision: HEAD
-    path: workloads/on-prem/apps
+    path: workloads/on-prem/qdrant
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: frames-onprem
   syncPolicy:
     automated:
       prune: true
