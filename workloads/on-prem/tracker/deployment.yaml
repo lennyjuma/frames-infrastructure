@@ -17,6 +17,7 @@ spec:
       containers:
         - name: tracker
           image: frames-onprem-tracker:latest
+          imagePullPolicy: Never
           ports:
             - name: http
               containerPort: 8081
